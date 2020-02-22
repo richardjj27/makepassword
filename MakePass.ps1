@@ -1,18 +1,23 @@
 # A function to create a defined length password and copy it to the clipboard.
 
 # 0000 = P@assword01
-# 0001 = lowercase (default)
+# 0001 = lowercase
 # 0010 = uppercase
 # 0100 = numbers
 # 1000 = special characters
+# default = 12 characters of type 1111
+
+# default seed is epoc time divided by 1000.
+# Each character of the password is the seed * pass_length * pass_complexity + character number.
+
 function Get-NicePassword {
     param(
     [Parameter(Position=0,HelpMessage="How long do you want the password to be?")]
     [ValidateRange(1,40)]
-    [int]$pass_length=10,
+    [int]$pass_length=12,
     [Parameter(Position=1,HelpMessage="How complex should the password be?")]
     [ValidateRange(0,15)]
-    [int]$pass_complexity=1,
+    [int]$pass_complexity=15,
     [Parameter(Position=2,HelpMessage="How random should the password be?")]
     [ValidateRange(0,2147483)]
     [int]$pass_seed=(get-date -uformat %s) % 2147483
@@ -34,5 +39,3 @@ function Get-NicePassword {
     set-clipboard $password
     return $password
     }
-
-  Get-NicePassword 10 5 54545

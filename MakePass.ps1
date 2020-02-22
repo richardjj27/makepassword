@@ -1,3 +1,5 @@
+
+
 # A function to create a defined length password and copy it to the clipboard.
 
 # 0000 = P@assword01
@@ -10,6 +12,12 @@
 # Each character of the password is the randomized by the seed * pass_length * pass_complexity + character number.
 
 function Get-NicePassword {
+    <#
+    .SYNOPSIS
+    xxxx
+    .EXAMPLE
+    yyyy
+    #>
     param(
     [Parameter(Position=0,HelpMessage="How long do you want the password to be?")]
     [ValidateRange(1,40)]
@@ -38,3 +46,5 @@ function Get-NicePassword {
     set-clipboard $password
     return $password
     }
+
+    Get-NicePassword 10 2

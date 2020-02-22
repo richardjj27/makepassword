@@ -14,8 +14,8 @@ function Get-NicePassword {
     [ValidateRange(0,15)]
     [int]$pass_complexity=1,
     [Parameter(Position=2,HelpMessage="How random should the password be?")]
-    [ValidateRange(0,2147483647)]
-    [int]$pass_seed=(get-date -uformat %s)
+    [ValidateRange(0,2147483)]
+    [int]$pass_seed=(get-date -uformat %s) % 2147483
     )
 
     if ($pass_complexity -eq 0) {
@@ -35,4 +35,4 @@ function Get-NicePassword {
     return $password
     }
 
-  Get-NicePassword 10 5 30
+  Get-NicePassword 10 5 54545

@@ -12,7 +12,10 @@ function Get-NicePassword {
     [int]$pass_length=10,
     [Parameter(Position=1,HelpMessage="How complex should the password be?")]
     [ValidateRange(0,15)]
-    [int]$pass_complexity=1
+    [int]$pass_complexity=1,
+    [Parameter(Position=2,HelpMessage="How random should the password be?")]
+    [ValidateRange(0,2147483647)]
+    [int]$pass_seed=(get-date -uformat %s)
     )
 
     if ($pass_complexity -eq 0) {
@@ -25,9 +28,11 @@ function Get-NicePassword {
         if ($pass_complexity -band 8) {$valid_chars += (33),(35..38),(40..43)} # exclude ' and "
 
         # Add $pass_length characters to the string from the $valid_chars array.
-        for ($i=1; $i -le $pass_length; $i++) { $password += $valid_chars | Get-Random | % {[char]$_} }
+        for ($i=1; $i -le $pass_length; $i++) { $password += $valid_chars | Get-Random -setseed ((($pass_seed+$i)*$pass_length*$pass_complexity)+$i)| % {[char]$_} }
     }
 
     set-clipboard $password
     return $password
     }
+
+  Get-NicePassword 10 5 30

@@ -11,9 +11,9 @@ function Get-NicePassword {
         0100 = 4 = numbers
         1000 = 8 = special characters
 
-        default = 12 characters of lower+upper+numbers+specials
+        default = -PassLength 12 -Pass_Complexity 15 -Pass_Seed random
         
-        Each character of the password is the randomized by the seed * Pass_Length * Pass_Complexity + character number.
+        Each character of the password is the randomized by (Pass_Seed * Pass_Length * Pass_Complexity) + character number.
     .EXAMPLE
         Get-NicePassword
         Creates a 12 character password using all available characters.
@@ -27,7 +27,7 @@ function Get-NicePassword {
         Creates a 10 character password using all available character types.
     .EXAMPLE
         Get-NicePassword 6 1 10044 
-        Creates a 6 character password using lower case characters and seeded for predictable results.
+        Creates a 6 character password using lower case characters and seeded 10044 for predictable results.
     #>
     param(
     [Parameter(Position=0,HelpMessage="How long do you want the password to be?")]
